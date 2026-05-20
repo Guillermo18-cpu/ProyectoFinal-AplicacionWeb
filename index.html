@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>La Madeleine — Pastelería</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+
+<div class="overlay" id="sideOverlay" onclick="closeSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-head">
+    <div class="sidebar-logo">La <span>Madeleine</span></div>
+    <button class="sidebar-close" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <div class="nav-section">Gestión</div>
+
+  <div class="nav-item active" onclick="openPanel('productos')">
+    <i class="fa-solid fa-box-open"></i> Productos
+  </div>
+
+  <div class="nav-item" onclick="openPanel('categorias')">
+    <i class="fa-solid fa-layer-group"></i> Categorías
+  </div>
+
+  <div class="nav-item" onclick="openPanel('proveedores')">
+    <i class="fa-solid fa-truck"></i> Proveedores
+  </div>
+
+  <div class="sidebar-footer">Sistema de inventario</div>
+</aside>
+
+<nav class="topnav">
+  <div class="topnav-left">
+    <button class="menu-btn" onclick="openSidebar()">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="brand">La <em>Madeleine</em></div>
+  </div>
+
+  <ul class="topnav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#especialidades">Especialidades</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+  </ul>
+
+  <button class="topnav-cta" onclick="openSidebar()">
+    <i class="fa-solid fa-gauge-high" style="margin-right:7px"></i>
+    Panel
+  </button>
+</nav>
+
+<section class="hero" id="inicio">
+  <div class="hero-left">
+
+    <div class="hero-tag">Pastelería artesanal</div>
+
+    <h1 class="hero-h1">
+      El arte de lo<br>
+      <em>dulce</em>,<br>
+      hecho a mano.
+    </h1>
+
+    <p class="hero-desc">
+      Elaboramos cada pieza con ingredientes seleccionados,
+      técnicas tradicionales francesas y una pasión desbordante
+      por la repostería de autor.
+    </p>
+
+    <div class="hero-btns">
+      <button class="btn-hero primary" onclick="openPanel('productos')">
+        <i class="fa-solid fa-store" style="margin-right:8px"></i>
+        Ver catálogo
+      </button>
+
+      <button class="btn-hero outline">
+        <i class="fa-solid fa-phone" style="margin-right:8px"></i>
+        Contáctenos
+      </button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">12</div>
+        <div class="stat-label">Años de experiencia</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-num">80+</div>
+        <div class="stat-label">Recetas propias</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-num">4.9</div>
+        <div class="stat-label">Valoración media</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-pattern"></div>
+
+    <div class="hero-card-wrap">
+      <div class="hero-card">
+
+        <div class="card-img-placeholder">
+          <i class="fa-solid fa-cake-candles"></i>
+        </div>
+
+        <div class="card-title">Tarta Fraisier</div>
+
+        <div class="card-sub">
+          Mousse de vainilla · Fresas frescas · Almendra
+        </div>
+
+        <div class="card-price">$28.000</div>
+
+        <div class="card-tags">
+          <span class="tag tag-rose">Temporada</span>
+          <span class="tag tag-gold">Bestseller</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="especialidades">
+  <div class="section-inner">
+
+    <div class="section-label">Nuestras creaciones</div>
+
+    <h2 class="section-h2">
+      Especialidades <em>de la casa</em>
+    </h2>
+
+    <p class="section-sub">
+      Una selección de nuestras piezas más queridas,
+      elaboradas cada día desde las primeras horas de la mañana.
+    </p>
+
+    <div class="products-grid" id="landing-products">
+    </div>
+
+  </div>
+</section>
+
+<div class="ornament">
+  <i class="fa-solid fa-star"></i>
+  <i class="fa-solid fa-star"></i>
+  <i class="fa-solid fa-star"></i>
+</div>
+
+<div class="features" id="nosotros">
+
+  <div class="features-inner">
+
+    <div class="feature">
+      <i class="fa-solid fa-seedling"></i>
+      <div class="feature-name">Ingredientes naturales</div>
+      <div class="feature-desc">
+        Sin conservantes ni colorantes artificiales.
+        Todo de origen certificado.
+      </div>
+    </div>
+
+    <div class="feature">
+      <i class="fa-solid fa-hands"></i>
+      <div class="feature-name">Elaboración artesanal</div>
+      <div class="feature-desc">
+        Cada pieza es moldeada y decorada a mano
+        por nuestros pasteleros.
+      </div>
+    </div>
+
+    <div class="feature">
+      <i class="fa-solid fa-truck-fast"></i>
+      <div class="feature-name">Entrega a domicilio</div>
+      <div class="feature-desc">
+        Llegamos a tu puerta conservando la frescura
+        y presentación impecable.
+      </div>
+    </div>
+
+    <div class="feature">
+      <i class="fa-solid fa-award"></i>
+      <div class="feature-name">Calidad premiada</div>
+      <div class="feature-desc">
+        Reconocidos en el Concurso Nacional de
+        Repostería Artesanal 2023.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">
+    La Madeleine — Pastelería Artesanal
+  </div>
+
+  <div class="footer-copy">
+    &copy; 2025 Todos los derechos reservados
+  </div>
+</footer>
+
+<div class="overlay" id="panelOverlay" onclick="closePanel()" style="z-index:1099"></div>
+
+<div class="panel" id="panel">
+
+  <div class="panel-top">
+    <div class="panel-breadcrumb">
+      <span>Panel</span>
+      <i class="fa-solid fa-chevron-right"></i>
+      <strong id="panel-section-name">Productos</strong>
+    </div>
+
+    <button class="panel-close-btn" onclick="closePanel()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="panel-tabs" id="panel-tabs">
+    <div class="ptab active" onclick="switchTab('productos')">Productos</div>
+    <div class="ptab" onclick="switchTab('categorias')">Categorías</div>
+    <div class="ptab" onclick="switchTab('proveedores')">Proveedores</div>
+  </div>
+
+  <div class="panel-toolbar">
+    <input
+      class="p-search"
+      type="text"
+      id="p-search"
+      placeholder="Buscar..."
+      oninput="renderActive()"
+    >
+
+    <button class="pbtn pbtn-primary" onclick="openModal()">
+      <i class="fa-solid fa-plus"></i>
+      Agregar
+    </button>
+  </div>
+
+  <div class="panel-body" id="panel-body">
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeMOnBg(event)">
+  <div class="modal">
+
+    <div class="modal-head">
+      <div class="modal-title" id="modal-title">Agregar</div>
+
+      <button class="modal-x" onclick="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="form-col" id="modal-form"></div>
+
+    <div class="modal-foot">
+      <button class="pbtn pbtn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="pbtn pbtn-primary" onclick="saveItem()">Guardar</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <div class="toast-dot" id="toast-dot"></div>
+  <span id="toast-msg"></span>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
