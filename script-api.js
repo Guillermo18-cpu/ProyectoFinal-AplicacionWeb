@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:3000/api';
 
 let data = {
-  productos: [], // Ahora los productos vienen de MySQL
+  productos: [], 
   categorias: [
     {id:1, nombre:'Tartas', descripcion:'Tartas enteras y porciones', estado:'Activa'},
     {id:2, nombre:'Panadería', descripcion:'Pan y viennoiseries', estado:'Activa'},
@@ -18,9 +18,7 @@ let nextId = {categorias:5, proveedores:4};
 let activeTab = 'productos';
 let editingId = null;
 
-// =====================================
-// FUNCIONES API (Tu parte)
-// =====================================
+
 async function fetchProductos() {
   try {
     const res = await fetch(`${API_URL}/productos`);
@@ -31,13 +29,10 @@ async function fetchProductos() {
 }
 
 async function initApp() {
-  await fetchProductos(); // Carga productos de MySQL
+  await fetchProductos(); 
   renderLanding(); 
 }
 
-// =====================================
-// LÓGICA DE INTERFAZ ORIGINAL
-// =====================================
 function openSidebar(){
   document.getElementById('sidebar').classList.add('open');
   document.getElementById('sideOverlay').classList.add('show');
@@ -210,14 +205,14 @@ function closeModal(){
 }
 function closeMOnBg(e){if(e.target===document.getElementById('modalOverlay'))closeModal()}
 
-// =====================================
-// GUARDAR Y ELIMINAR 
-// =====================================
+
+
+
 async function saveItem(){
   const f1 = document.getElementById('f1')?.value.trim();
   if(!f1){showToast('El nombre es requerido',true);return}
 
-  // --- TU PARTE: PRODUCTOS EN MYSQL ---
+  
   if(activeTab==='productos'){
     const obj = {
       nombre: f1,
@@ -252,7 +247,7 @@ async function saveItem(){
       showToast('Error de conexión a la BD', true);
     }
 
-  // --- PARTE DE TU COMPAÑERO: CATEGORÍAS (Temporalmente local) ---
+  
   } else if(activeTab==='categorias'){
     const obj={id:editingId||nextId.categorias++,nombre:f1,
       descripcion:document.getElementById('f5').value.trim(),
@@ -262,7 +257,7 @@ async function saveItem(){
     closeModal(); renderActive(); renderLanding();
     showToast(editingId?'Actualizado correctamente':'Agregado correctamente');
 
-  // --- PARTE DE TU COMPAÑERO: PROVEEDORES (Temporalmente local) ---
+  
   } else {
     const obj={id:editingId||nextId.proveedores++,nombre:f1,
       contacto:document.getElementById('f2t').value.trim(),
@@ -327,5 +322,5 @@ function showToast(msg,isErr=false){
   setTimeout(()=>t.classList.remove('show'),2800);
 }
 
-// Iniciar aplicación
+
 initApp();
