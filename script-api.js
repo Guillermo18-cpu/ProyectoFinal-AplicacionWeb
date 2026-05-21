@@ -5,6 +5,7 @@ let data = {
   categorias: [],
   proveedores: []
 };
+
 let nextId = { categorias: 5, proveedores: 4 };
 let activeTab = 'productos';
 let editingId = null;
@@ -40,6 +41,7 @@ async function initApp() {
 }
 
 function openSidebar() {
+
   document.getElementById('sidebar').classList.add('open');
   document.getElementById('sideOverlay').classList.add('show');
 }
@@ -277,6 +279,7 @@ async function saveItem() {
       showToast('Error en la BD', true); 
       console.error(err);
     }
+
   } else {
     const obj = {
       nombre: f1,
@@ -358,4 +361,4 @@ function showToast(msg, isErr = false) {
 }
 
 initApp();
- 
+
