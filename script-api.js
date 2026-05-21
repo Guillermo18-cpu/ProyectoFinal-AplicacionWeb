@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:3000/api';
 
 let data = {
-  productos: [], // ¡Ahora inicia vacío y se llena desde el servidor!
+  productos: [], // Ahora los productos vienen de MySQL
   categorias: [
     {id:1, nombre:'Tartas', descripcion:'Tartas enteras y porciones', estado:'Activa'},
     {id:2, nombre:'Panadería', descripcion:'Pan y viennoiseries', estado:'Activa'},
@@ -14,29 +14,29 @@ let data = {
     {id:3, nombre:'Importadora Gourmet', contacto:'Andrea Ruiz', email:'andrea@igourmet.co', producto:'Harinas especiales y almendras'},
   ]
 };
-let nextId = {categorias:5, proveedores:4}; // nextId de productos ahora se controla en Node.js
+let nextId = {categorias:5, proveedores:4}; 
 let activeTab = 'productos';
 let editingId = null;
 
 // =====================================
-// NUEVAS FUNCIONES PARA LA API (Tu parte)
+// FUNCIONES API (Tu parte)
 // =====================================
 async function fetchProductos() {
   try {
     const res = await fetch(`${API_URL}/productos`);
     data.productos = await res.json();
   } catch(e) {
-    console.error('Error al conectar con la API:', e);
+    console.error('Error al conectar con la base de datos:', e);
   }
 }
 
 async function initApp() {
-  await fetchProductos(); // Espera a descargar los productos desde Node.js
-  renderLanding(); // Dibuja la página de inicio
+  await fetchProductos(); // Carga productos de MySQL
+  renderLanding(); 
 }
 
 // =====================================
-// LÓGICA DE LA INTERFAZ (Original)
+// LÓGICA DE INTERFAZ ORIGINAL
 // =====================================
 function openSidebar(){
   document.getElementById('sidebar').classList.add('open');
@@ -211,39 +211,36 @@ function closeModal(){
 function closeMOnBg(e){if(e.target===document.getElementById('modalOverlay'))closeModal()}
 
 // =====================================
-// GUARDAR y ELIMINAR ACTUALIZADO CON FETCH
+// GUARDAR Y ELIMINAR 
 // =====================================
 async function saveItem(){
   const f1 = document.getElementById('f1')?.value.trim();
   if(!f1){showToast('El nombre es requerido',true);return}
 
+  // --- TU PARTE: PRODUCTOS EN MYSQL ---
   if(activeTab==='productos'){
-    const obj={
-      nombre:f1,
-      categoria:document.getElementById('f2s').value,
-      precio:parseFloat(document.getElementById('f3').value)||0,
-      stock:parseInt(document.getElementById('f4').value)||0,
-      descripcion:document.getElementById('f5').value.trim()
+    const obj = {
+      nombre: f1,
+      categoria: document.getElementById('f2s').value,
+      precio: parseFloat(document.getElementById('f3').value)||0,
+      stock: parseInt(document.getElementById('f4').value)||0,
+      descripcion: document.getElementById('f5').value.trim()
     };
     
     try {
       if(editingId) {
-        // Enviar petición PUT para actualizar
         await fetch(`${API_URL}/productos/${editingId}`, {
           method: 'PUT',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(obj)
         });
       } else {
-        // Enviar petición POST para crear
         await fetch(`${API_URL}/productos`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(obj)
         });
       }
-      
-      // Refrescar los datos llamando de nuevo a la API
       await fetchProductos();
       closeModal();
       renderActive();
@@ -252,9 +249,10 @@ async function saveItem(){
 
     } catch(err) {
       console.error(err);
-      showToast('Error de red, revisa si el servidor Node está prendido', true);
+      showToast('Error de conexión a la BD', true);
     }
 
+  // --- PARTE DE TU COMPAÑERO: CATEGORÍAS (Temporalmente local) ---
   } else if(activeTab==='categorias'){
     const obj={id:editingId||nextId.categorias++,nombre:f1,
       descripcion:document.getElementById('f5').value.trim(),
@@ -263,6 +261,8 @@ async function saveItem(){
     else data.categorias.push(obj);
     closeModal(); renderActive(); renderLanding();
     showToast(editingId?'Actualizado correctamente':'Agregado correctamente');
+
+  // --- PARTE DE TU COMPAÑERO: PROVEEDORES (Temporalmente local) ---
   } else {
     const obj={id:editingId||nextId.proveedores++,nombre:f1,
       contacto:document.getElementById('f2t').value.trim(),
@@ -282,7 +282,6 @@ async function deleteItem(id){
 
   if(activeTab === 'productos') {
     try {
-      // Enviar petición DELETE a la API
       await fetch(`${API_URL}/productos/${id}`, { method: 'DELETE' });
       await fetchProductos();
       renderActive();
@@ -328,5 +327,5 @@ function showToast(msg,isErr=false){
   setTimeout(()=>t.classList.remove('show'),2800);
 }
 
-// Inicializar y cargar desde la API
+// Iniciar aplicación
 initApp();
