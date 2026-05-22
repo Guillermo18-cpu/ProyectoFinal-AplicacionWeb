@@ -1,18 +1,12 @@
+require('dotenv').config(); 
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
-const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.set('view engine', 'ejs');
-
-app.set('views', path.join(__dirname, 'views'));
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(cors());
+app.use(cors()); 
 app.use(express.json());
 
 const db = mysql.createPool({
@@ -25,10 +19,10 @@ const db = mysql.createPool({
 
 db.getConnection()
   .then(() => {
-    console.log('✅ Base de datos MySQL conectada correctamente');
+    console.log('Base de datos MySQL conectada correctamente');
   })
   .catch(err => {
-    console.error('❌ Error de conexión a MySQL:', err);
+    console.error('Error de conexión a MySQL:', err);
   });
 
 app.get('/', (req, res) => {
